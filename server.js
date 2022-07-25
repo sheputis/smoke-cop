@@ -1,6 +1,8 @@
 var http = require('http'),
-    fs = require('fs');
+    fs   = require('fs');
 
+
+//const sqlite3 = require('sqlite3').verbose();
 
 fs.readFile('./index.html', function (err, html) {
     if (err) {
