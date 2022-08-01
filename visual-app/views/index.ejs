@@ -1,42 +1,45 @@
 <!DOCTYPE HTML>
   <html>
     <head>
+      <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
       <script>
         window.onload = function () {
-
+        // using chart https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/multi-series-charts/
+        // formatting  https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/formatting-date-time/
         var chart = new CanvasJS.Chart("chartContainer", {
           animationEnabled: true,
-          theme: "light2",
+          theme: "dark2",
           title:{
-            text: "Simple Line Chart"
+            text: "Arnie's Super Duper Smoke Detector"
           },
-          data: [{
-            type: "line",
-                indexLabelFontSize: 16,
-            dataPoints: [
-              <% values.forEach(function(element) { %>
-                { y: <%= element.y %> },
-              <% }); %>
-
-              // <% values.forEach(function(element) { %>
-  
-              //   <%= element %>
-              // <% }); %>
-
-              // { y: 450 },
-              // { y: 414},
-              // { y: 520, indexLabel: "\u2191 highest",markerColor: "red", markerType: "triangle" },
-              // { y: 460 },
-              // { y: 450 },
-              // { y: 500 },
-              // { y: 480 },
-              // { y: 480 },
-              // { y: 410 , indexLabel: "\u2193 lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
-              // { y: 500 },
-              // { y: 480 },
-              // { y: 510 }
-            ]
-          }]
+          axisX:{      
+            valueFormatString: "DDD HH:mm:ss" ,
+            labelAngle: -50
+          },
+          data: [
+            {
+              type: "line",
+              indexLabelFontSize: 16,
+              showInLegend: true,
+              name: "Sensor1",
+              dataPoints: [
+                <% one.forEach(function(element) { %>
+                  { y: <%= element.y %>, x: new Date(<%= element.x %>)  },
+                <% }); %>
+              ]
+            },
+            {
+              type: "line",
+              indexLabelFontSize: 16,
+              showInLegend: true,
+              name: "Sensor2",
+              dataPoints: [
+                <% two.forEach(function(element) { %>
+                  { y: <%= element.y %>, x: new Date(<%= element.x %>)  },
+                <% }); %>
+              ]
+            }
+          ]
         });
         chart.render();
 
@@ -45,13 +48,7 @@
     </head>
   <body>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-      <ul>
-        <% values.forEach(function(element) { %>
-          <li>
-            <strong><%= element.value %></strong>
-          </li>
-        <% }); %>
-      </ul>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   </body>
 </html>
