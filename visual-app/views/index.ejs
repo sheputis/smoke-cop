@@ -17,28 +17,19 @@
             labelAngle: -50
           },
           data: [
-            {
-              type: "line",
-              indexLabelFontSize: 16,
-              showInLegend: true,
-              name: "Sensor1",
-              dataPoints: [
-                <% one.forEach(function(element) { %>
-                  { y: <%= element.y %>, x: new Date(<%= element.x %>)  },
-                <% }); %>
-              ]
-            },
-            {
-              type: "line",
-              indexLabelFontSize: 16,
-              showInLegend: true,
-              name: "Sensor2",
-              dataPoints: [
-                <% two.forEach(function(element) { %>
-                  { y: <%= element.y %>, x: new Date(<%= element.x %>)  },
-                <% }); %>
-              ]
-            }
+            <% for (const sensor_name in grouped_sensor_values) { %>
+              {
+                type: "line",
+                indexLabelFontSize: 16,
+                showInLegend: true,
+                name: "<%= sensor_name %>",
+                dataPoints: [
+                  <% grouped_sensor_values[sensor_name].forEach(function(element) { %>
+                    { y: <%= element.sensor_value %>, x: new Date(<%= element.time_utc %>)  },
+                  <% }); %>
+                ]
+              },
+            <% }; %>
           ]
         });
         chart.render();

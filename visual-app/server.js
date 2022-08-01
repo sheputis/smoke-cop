@@ -8,40 +8,26 @@ app.set('view engine', 'ejs');
 
 // index page
 app.get('/', function(req, res) {
-  // var one1 = [
-  //     { y: 2012, x: 21},
-  //     { y: 1996, x: 23},
-  //     { y: 2013, x: 25}
-  //   ];
-  // var two2 = [
-  //     { y: 2002, x: 21},
-  //     { y: 1980, x: 23},
-  //     { y: 2030, x: 25}
-  //   ];
 
-  // var one1 = [
-  //   { y: 2012, x: [2012, 06, 18, 21] },
-  //   { y: 1996, x: [2012, 06, 18, 22] },
-  //   { y: 2013, x: [2012, 06, 18, 23] }
-  // ];
-  // var two2 = [
-  //   { y: 2002, x: [2012, 06, 18, 21] },
-  //   { y: 1980, x: [2012, 06, 18, 22] },
-  //   { y: 2030, x: [2012, 06, 18, 23] }
-  // ];
-  
-  var one1 = [
-    { y: 2012, x: 0 },
-    { y: 1996, x: 1000 },
-    { y: 2013, x: 4000 }
-  ];
-  var two2 = [
-    { y: 2002, x: 0 },
-    { y: 1980, x: 1000 },
-    { y: 2030, x: 4000 }
+  var sensor_values = [
+    { sensor_name: 'sensor1', sensor_value: 2012, time_utc: 0 },
+    { sensor_name: 'sensor1', sensor_value: 3000, time_utc: 1000 },
+    { sensor_name: 'sensor1', sensor_value: 4000, time_utc: 2000 },
+    { sensor_name: 'sensor2', sensor_value: 1000, time_utc: 3000 },
+    { sensor_name: 'sensor2', sensor_value: 1500, time_utc: 4000 },
+    { sensor_name: 'sensor2', sensor_value: 2300, time_utc: 5000 },
+    { sensor_name: 'sensor3', sensor_value: 2800, time_utc: 6000 },
+    { sensor_name: 'sensor3', sensor_value: 3100, time_utc: 7000 },
   ];
 
-  res.render('index',  { one: one1, two: two2 });
+  const grouped_sensor_values = sensor_values.reduce((group, element) => {
+    const { sensor_name } = element;
+    group[sensor_name] = group[sensor_name] || [];
+    group[sensor_name].push(element);
+    return group;
+  }, {});
+
+  res.render('index',  { grouped_sensor_values: grouped_sensor_values });
 });
 
 // // about page
