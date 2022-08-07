@@ -2,7 +2,7 @@ This project is meant to solve one very specific problem: A smoking neighbour.
 
 ### Visualisation (visual-app)
 
-The front-end is written in Nodejs. Go to ./visual-app and
+The front-end is written in Nodejs. Go to **./visual-app** and
 
 * Install packages: `npm install`
 * Run server `node server.js`
