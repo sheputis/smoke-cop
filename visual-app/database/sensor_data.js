@@ -1,5 +1,3 @@
-// project_repository.js
-
 class SensorData {
   constructor(dao) {
     this.dao = dao

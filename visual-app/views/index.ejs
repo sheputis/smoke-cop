@@ -11,21 +11,21 @@
           animationEnabled: false,
           theme: "dark2",
           title:{
-            text: "Arnie's Super Duper Smoke Detector"
+            text: "Past 10 minutes"
           },
           axisX:{      
             valueFormatString: "DDD HH:mm:ss" ,
             labelAngle: -50
           },
           data: [
-            <% for (const sensor_name in grouped_sensor_values) { %>
+            <% for (const sensor_name in grouped_past_ten_mins) { %>
               {
                 type: "line",
                 indexLabelFontSize: 16,
                 showInLegend: true,
                 name: "<%= sensor_name %>",
                 dataPoints: [
-                  <% grouped_sensor_values[sensor_name].forEach(function(element) { %>
+                  <% grouped_past_ten_mins[sensor_name].forEach(function(element) { %>
                     { y: <%= element.sensor_value %>, x: new Date(<%= element.time_utc %>)  },
                   <% }); %>
                 ]
@@ -33,13 +33,74 @@
             <% }; %>
           ]
         });
+
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+          animationEnabled: false,
+          theme: "dark1",
+          title:{
+            text: "Past two hours"
+          },
+          axisX:{      
+            valueFormatString: "DDD HH:mm:ss" ,
+            labelAngle: -50
+          },
+          data: [
+            <% for (const sensor_name in grouped_past_two_hours) { %>
+              {
+                type: "line",
+                indexLabelFontSize: 16,
+                showInLegend: true,
+                name: "<%= sensor_name %>",
+                dataPoints: [
+                  <% grouped_past_two_hours[sensor_name].forEach(function(element) { %>
+                    { y: <%= element.sensor_value %>, x: new Date(<%= element.time_utc %>)  },
+                  <% }); %>
+                ]
+              },
+            <% }; %>
+          ]
+        });
+
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+          animationEnabled: false,
+          theme: "dark1",
+          title:{
+            text: "Past 24 hours"
+          },
+          axisX:{      
+            valueFormatString: "DDD HH:mm:ss" ,
+            labelAngle: -50
+          },
+          data: [
+            <% for (const sensor_name in grouped_past_day) { %>
+              {
+                type: "line",
+                indexLabelFontSize: 16,
+                showInLegend: true,
+                name: "<%= sensor_name %>",
+                dataPoints: [
+                  <% grouped_past_day[sensor_name].forEach(function(element) { %>
+                    { y: <%= element.sensor_value %>, x: new Date(<%= element.time_utc %>)  },
+                  <% }); %>
+                ]
+              },
+            <% }; %>
+          ]
+        });
+
+
         chart.render();
+        chart2.render();
+        chart3.render();
+
 
         }
       </script>
     </head>
   <body>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+    <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
 
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   </body>
