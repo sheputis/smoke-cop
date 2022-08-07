@@ -33,6 +33,10 @@ class SensorData {
   getAll() {
     return this.dao.all(`SELECT * FROM sensor_values`)
   }
+
+  getAllPast(time_utc_reference) {
+    return this.dao.all(`SELECT * FROM sensor_values WHERE time_utc > ?`, [time_utc_reference])
+  }
 }
 
 module.exports = SensorData;

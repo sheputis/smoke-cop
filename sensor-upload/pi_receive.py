@@ -7,6 +7,10 @@ import time
 import struct
 from RF24 import RF24, RF24_PA_LOW
 
+import os
+
+import sqlite_uploader
+
 ########### USER CONFIGURATION ###########
 # See https://github.com/TMRh20/RF24/blob/master/pyRF24/readme.md
 # Radio CE Pin, CSN Pin, SPI Speed
@@ -27,13 +31,22 @@ radio = RF24(22, 0)
 # list to store our float number for the payloads sent/received
 payload = [0.0]
 
+def create_db_connection():
+    cwd = os.getcwd()
+    database = os.path.join(cwd, '../database/database.sqlite3')
+    # create a database connection
+    return sqlite_uploader.create_connection(database)
+
 def slave(timeout=6):
     """Listen for any payloads and print the transaction
 
     :param int timeout: The number of seconds to wait (with no transmission)
         until exiting function.
     """
+    db_connection = create_db_connection()
+
     radio.startListening()  # put radio in RX mode
+
 
     start_timer = time.monotonic()
     while (time.monotonic() - start_timer) < timeout:
@@ -50,6 +63,7 @@ def slave(timeout=6):
                 f"Received {radio.payloadSize} bytes",
                 f"on pipe {pipe_number}: {payload[0]}",
             )
+            sqlite_uploader.create_sensor_value(db_connection, payload[0])
             start_timer = time.monotonic()  # reset the timeout timer
 
     print("Nothing received in", timeout, "seconds. Leaving RX role")

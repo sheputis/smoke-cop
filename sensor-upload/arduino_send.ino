@@ -1,5 +1,7 @@
 /*
  * See documentation at https://nRF24.github.io/RF24
+ * See License information at root directory of this library
+ * Author: Brendan Doherty (2bndy5)
  */
 
 /**
@@ -14,6 +16,11 @@
 
 // instantiate an object for the nRF24L01 transceiver
 RF24 radio(9, 10);  // using pin 7 (9) for the CE pin, and pin 8 (10) for the CSN pin
+
+// SMOKE DETECTOR START
+int LED = 13; // Use the onboard Uno LED
+int analog_IN = A0;  // This is our input pin
+// SMOKE DETECTOR END
 
 // Let these addresses be used for the pair
 uint8_t address[][6] = { "1Node", "2Node" };
@@ -33,7 +40,11 @@ bool role = true;  // true = TX role, false = RX role
 float payload = 0.0;
 
 void setup() {
-
+  // SMOKE DETECTOR START
+  pinMode(LED, OUTPUT);
+  pinMode(analog_IN, INPUT);
+  // SMOKE DETECTOR END
+  
   Serial.begin(9600);
   while (!Serial) {
     // some boards need to wait to ensure access to serial over USB
@@ -68,7 +79,12 @@ void setup() {
 }  // setup
 
 void loop() {
-
+  // SMOKE DETECTOR START
+  float payload = analogRead(analog_IN);  
+  Serial.print("Analog read: ");
+  Serial.println(payload);
+  // SMOKE DETECTOR END
+  
   // This device is a TX node
 
   unsigned long start_timer = micros();                // start the timer
@@ -81,7 +97,6 @@ void loop() {
     Serial.print(end_timer - start_timer);  // print the timer result
     Serial.print(F(" us. Sent: "));
     Serial.println(payload);  // print payload sent
-    payload += 0.01;          // increment float payload
   } else {
     Serial.println(F("Transmission failed or timed out"));  // payload was not delivered
   }
