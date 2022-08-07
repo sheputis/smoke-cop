@@ -56,7 +56,3 @@ class AppDAO {
 }
 
 module.exports = AppDAO
-
-// var person = new AppDAO('test_base.db');
-// console.log(person);
-

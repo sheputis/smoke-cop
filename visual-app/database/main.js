@@ -9,11 +9,11 @@ function main() {
   //let projectId
 
   data.createTable()
-    // .then(() => data.create('r2d2', 243, 1))
-    // .then(() => data.create('r2d2', 256, 2))
-    // .then(() => data.create('r2d2', 260, 3))
-    // .then(() => data.create('r2d2', 259, 4))
-    // .then(() => data.create('r2d2', 230, 5))
+    .then(() => data.create('sensor1', 243, 1659461381460))
+    .then(() => data.create('sensor1', 256, 1659461581460))
+    .then(() => data.create('sensor1', 260, 1659461781460))
+    .then(() => data.create('sensor1', 259, 1659462481460))
+    .then(() => data.create('sensor1', 230, 1659462581460))
     .then(() => data.getAll())
     .then((sensor) => {
       console.log(`\nRetreived project from database`)

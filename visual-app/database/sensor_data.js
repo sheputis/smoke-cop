@@ -13,15 +13,15 @@ class SensorData {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       sensor_name TEXT,
       sensor_value INTEGER,
-      time INTEGER
+      time_utc INTEGER
       )`
     return this.dao.run(sql)
   }
 
-  create(sensor_name, sensor_value, time) {
+  create(sensor_name, sensor_value, time_utc) {
     return this.dao.run(
-      'INSERT INTO sensor_values (sensor_name, sensor_value, time) VALUES (?, ?, ?)',
-      [sensor_name, sensor_value, time])
+      'INSERT INTO sensor_values (sensor_name, sensor_value, time_utc) VALUES (?, ?, ?)',
+      [sensor_name, sensor_value, time_utc])
   }
 
   getById(id) {
